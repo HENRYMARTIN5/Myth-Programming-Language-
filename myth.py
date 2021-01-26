@@ -5,7 +5,8 @@ import sys
 import os
 from utils import clear
 import output
-from future import print as pr
+import re
+
 debug = True
 noDebug = False
 def compile(filepath, out, dbg, compileType):
@@ -94,13 +95,29 @@ def compile(filepath, out, dbg, compileType):
 			partList1 = line.split("=")
 			varName = partList1[0].split("var ")[1].strip()
 			varVal = partList1[1].strip()
-			FileData.append("varHandler.create(\""+varName+"\", \""+varVal+"\")")
+			if line.find("[") != -1:
+				try:
+					result = re.search(r"\[([A-Za-z0-9_]+)\]", varVal)
+					float(result.group(1))
+					
+					
+					FileData.append("varHandler.create(\""+varName+"\", "+result.group(1)+")")
+				except:
+					error.SyntaxError()
+					shouldWrite = False
+					break
+
+			else:
+				FileData.append("varHandler.create(\""+varName+"\", \""+varVal+"\")")
+			
+		elif line.startswith("increment"):
+			parts = line.split(" ")
+			expression = "varHandler.create(\""+parts[1]+"\", varHandler.get(\""+parts[1]+"\") + " + parts[2] + ")"
+			FileData.append(expression.replace("\n", ""))
+			
 
 		elif line.startswith("~"):
 			pass
-
-		else:
-			error.SyntaxError()
 
 		numDone = numDone + 1
 
@@ -114,10 +131,8 @@ def compile(filepath, out, dbg, compileType):
 		outFile.write(CompiledFile)
 		outFile.close()
 		cpr("Wrote python file!", "green")
-		if compileType:
-			os.system("python " + out)
-		else:
-			cpr("Plain run execution is currently not supported, sorry!", "red")
+		
+		os.system("python " + out)
 			
 
 

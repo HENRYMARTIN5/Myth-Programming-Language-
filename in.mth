@@ -1,0 +1,3 @@
+var a = [1]
+increment a 1
+outvar a

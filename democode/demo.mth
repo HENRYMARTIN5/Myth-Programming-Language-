@@ -39,11 +39,36 @@ out Here is a greeting for you:
 out
 outvar greeting
 
+out
+out
+out
+out
+
+~ Nice! Now, how about trying a variable with a integer value
+
+var thisIsANumber = [120]
+outvar thisIsANumber
+~ And let's subtract 60:
+
+increment thisIsANumber -60
+out
+outvar thisIsANumber
+~ And add 20:
+
+increment thisIsANumber 20
+out
+outvar thisIsANumber
 ~ Uh oh... our console is getting messy. Let's use the clear statement and clean that up. First, i'll give the user some time to read the text, though.
 
 delay 35
 
 clear
 
+out The console was just cleared!
+
+delay 20
+
 ~ That's it for now!
 ~ Thanks for taking the time to read through this incredibly boring demo!
+
+exit

@@ -50,7 +50,8 @@ def compile(filepath, out, dbg, compileType):
 				break			
 			DelayToDo = line.split("delay ")[1]
 			FileData.append("try:")
-			FileData.append("	sleep(float("+DelayToDo.replace("\n", "")+"))")
+			FileData.app
+			end("	sleep(float("+DelayToDo.replace("\n", "")+"))")
 			FileData.append("except ValueError:")
 			FileData.append("	sys.exit()")
 

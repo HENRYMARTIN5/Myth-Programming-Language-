@@ -36,7 +36,7 @@ var greeting = Hello! Nice weather we're having, isn't it?
 ~ Ahh. That's better. Now, I want to show that greeting. To do that, we use the "outvar" statement.
 
 out Here is a greeting for you:
-out
+out \n
 outvar greeting
 
 out

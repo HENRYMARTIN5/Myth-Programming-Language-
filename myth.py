@@ -7,36 +7,7 @@ from utils import clear
 import output
 import re
 
-if os.name == 'nt':
-    import msvcrt
-    import ctypes
-
-    class _CursorInfo(ctypes.Structure):
-        _fields_ = [("size", ctypes.c_int),
-                    ("visible", ctypes.c_byte)]
-
-def hide_cursor():
-    if os.name == 'nt':
-        ci = _CursorInfo()
-        handle = ctypes.windll.kernel32.GetStdHandle(-11)
-        ctypes.windll.kernel32.GetConsoleCursorInfo(handle, ctypes.byref(ci))
-        ci.visible = False
-        ctypes.windll.kernel32.SetConsoleCursorInfo(handle, ctypes.byref(ci))
-    elif os.name == 'posix':
-        sys.stdout.write("\033[?25l")
-        sys.stdout.flush()
-
-def show_cursor():
-    if os.name == 'nt':
-        ci = _CursorInfo()
-        handle = ctypes.windll.kernel32.GetStdHandle(-11)
-        ctypes.windll.kernel32.GetConsoleCursorInfo(handle, ctypes.byref(ci))
-        ci.visible = True
-        ctypes.windll.kernel32.SetConsoleCursorInfo(handle, ctypes.byref(ci))
-    elif os.name == 'posix':
-        sys.stdout.write("\033[?25h")
-        sys.stdout.flush()
-
+from cursor import *
 
 
 debug = True
@@ -61,7 +32,7 @@ def compile(filepath, out, dbg, compileType):
 
 		if line.startswith("out "):
 			toPrint = line.split("out ")[1]
-			FileData.append("print(\""+toPrint+"\")")
+			FileData.append("print(\""+toPrint.replace("\n", "")+"\")")
 
 		elif line.startswith("outvar "):
 			varToPrint = line.split("outvar ")[1]
@@ -90,35 +61,35 @@ def compile(filepath, out, dbg, compileType):
 
 		elif line.startswith("-grey out "):
 			toPrint = line.split("-grey out ")[1]
-			FileData.append("cpr('"+toPrint+"', 'grey')")
+			FileData.append("cpr('"+toPrint.replace("\n", "")+"', 'grey')")
 
 		elif line.startswith("-red out "):
 			toPrint = line.split("-red out ")[1]
-			FileData.append("cpr('"+toPrint+"', 'red')")
+			FileData.append("cpr('"+toPrint.replace("\n", "")+"', 'red')")
 
 		elif line.startswith("-green out "):
 			toPrint = line.split("-green out ")[1]
-			FileData.append("cpr('"+toPrint+"', 'green')")
+			FileData.append("cpr('"+toPrint.replace("\n", "")+"', 'green')")
 
 		elif line.startswith("-yellow out "):
 			toPrint = line.split("-yellow out ")[1]
-			FileData.append("cpr('"+toPrint+"', 'yellow')")
+			FileData.append("cpr('"+toPrint.replace("\n", "")+"', 'yellow')")
 
 		elif line.startswith("-blue out "):
 			toPrint = line.split("-blue out ")[1]
-			FileData.append("cpr('"+toPrint+"', 'blue')")
+			FileData.append("cpr('"+toPrint.replace("\n", "")+"', 'blue')")
 
 		elif line.startswith("-magenta out "):
 			toPrint = line.split("-magenta out ")[1]
-			FileData.append("cpr('"+toPrint+"', 'magenta')")
+			FileData.append("cpr('"+toPrint.replace("\n", "")+"', 'magenta')")
 
 		elif line.startswith("-cyan out "):
 			toPrint = line.split("-cyan out ")[1]
-			FileData.append("cpr('"+toPrint+"', 'cyan')")	
+			FileData.append("cpr('"+toPrint.replace("\n", "")+"', 'cyan')")	
 
 		elif line.startswith("-white out "):
 			toPrint = line.split("-white out ")[1]
-			FileData.append("cpr('"+toPrint+"', 'white')")
+			FileData.append("cpr('"+toPrint.replace("\n", "")+"', 'white')")
 
 		elif line.startswith("-"):
 			error.BuildPreStringParam()

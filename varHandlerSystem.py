@@ -26,4 +26,3 @@ class variableHandler():
             if var.name == varName:
                 return var.val
         return None
-varHandler = variableHandler()
